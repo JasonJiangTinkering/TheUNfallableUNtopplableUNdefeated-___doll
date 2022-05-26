@@ -22,6 +22,10 @@ class Doll{
     // in m/s^2  
     float gravity = 9.81;
     
+    Doll(float x, float y){
+      this.object_x = x;
+      this.object_y = y;
+    }
     void set_angle(float angle){
         this.angle = angle;
     }
@@ -49,26 +53,30 @@ class Doll{
     
     void render(){
         // draw the body
+        //print("good try");
         push();
         rotate(angle);
-        move(object_x, object_y);
+        translate(object_x, object_y);
         strokeWeight(1);
+        stroke(30);
         fill(0);
-        
-
+        System.out.printf("object x: %f, object y: %f\n", object_x, object_y);
         // because of assumtion of radius-- jcenter circle
         circle(object_x, object_y, radius);
         // for visualisation center triangle dummy
-        float triy_bot = object_y - radius;
-        float triy_top = object_y + radius;
-        float trix_left = object_x - radius ;
-        float trix_right = object_x + radius;
+        float radius_y = radius * sin(angle);
+        float radius_x = radius * cos(angle);
+        float triy_bot = object_y - radius_y;
+        float triy_top = object_y + radius_y;
+        float trix_left = object_x - radius_x ;
+        float trix_right = object_x + radius_x;
         triangle(object_x, triy_top, trix_left, triy_bot, trix_right, triy_bot);
-        
+        push();
 
         // draw the center of mass
-        move(offset_cx, offset_cy);
-        circle(5);
+        translate(offset_cx, offset_cy);
+        circle(0, 0, 5);
+        pop();
         pop();
     }
 }
