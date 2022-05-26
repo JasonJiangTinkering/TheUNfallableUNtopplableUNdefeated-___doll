@@ -1,12 +1,16 @@
-import Doll.java
-setup(){
+import Doll;
+float time = .1;
+Doll doll = null;
+float frames_per_sec = 60;
+
+void setup(){
     size(500,500);
-    doll = new Doll.doll();
-    time = .1;
+    frameRate(60);
+    doll = new Doll();
 }
 
-draw(){
-    canvas.clear;
-    draw.move(time)
-    draw.render()
+void draw(){
+    background(255);
+    doll.move(1/frames_per_sec);
+    doll.render();
 }
