@@ -20,6 +20,9 @@ class Doll{
     float mass = 10;
     // in m/s^2  
     float gravity = 9.81;
+    float pullable_button_d = 30;
+    float obj_height = -3* radius;
+    boolean held = false;
     
 //coordinate of the point on the doll that the doll will rest on
     Doll(float x, float y, float ground){
@@ -34,19 +37,24 @@ class Doll{
     }
     
     void move(float t){
-        time += t;
-        angular_acceleration = calc_acceleration();
-        angular_velocity += t * angular_acceleration;
-        float delta_angle = t * angular_velocity;
-        angle += delta_angle;
-        // calc change in x
-        int neg = 1;
-        if (angle < 0){
-            neg = -1;
+        if (angle > PI) angle = PI;
+        if (angle < 0) angle = 0;
+        if (!held){
+          
+          time += t;
+          angular_acceleration = calc_acceleration();
+          angular_velocity += t * angular_acceleration;
+          float delta_angle = t * angular_velocity;
+          angle += delta_angle;
+          // calc change in x
+          int neg = 1;
+          if (angle < 0){
+              neg = -1;
+          }
+          object_x += neg * radius * delta_angle;
+          // set new y
+          object_y = ground- radius;
         }
-        object_x += neg * radius * delta_angle;
-        // set new y
-        object_y = ground- radius;
     }
     //cm to point of contact
     float get_cm_radius(){
@@ -77,15 +85,43 @@ class Doll{
         fill(126); //black center of object         
         circle(0, 0, radius * 2);
         
-        triangle(-1 * radius, 0, 0, -3 *radius,radius, 0);
+        triangle(-1 * radius, 0, 0, obj_height, radius, 0);
 
         push();
 
-        // draw the center ofujm  mass
+        // draw the center of mass
         translate(offset_cx, offset_cy);
         fill(255);
         circle(0, 0, 5);
         pop();
+        push();
+        translate(0 , obj_height);
+        strokeWeight(3);
+        stroke(3);
+        if (held){
+          fill(124,252,0);
+        }
+        else{
+          fill(0);
+        }
+          circle(0, 0, pullable_button_d);
         pop();
+        pop();
+    }
+    // only when mouse is pressed
+    void test_held(){
+      if (mousePressed){
+        held = true;
+        //compared to center of object
+        float delta_x = object_x - mouseX;
+        float delta_y = object_y - mouseY;
+        float holdangle = atan(delta_y / delta_x);
+        //if (cos(holdangle) > 0) holdangle -= PI;
+        angle = holdangle;
+
+      }
+      else{
+        held = false;
+      }
     }
 }

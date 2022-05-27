@@ -14,6 +14,7 @@ void setup(){
 
 void draw(){
     background(255);
+    doll.test_held();
     doll.move(1 / frames_per_sec);
     doll.render();
 }
