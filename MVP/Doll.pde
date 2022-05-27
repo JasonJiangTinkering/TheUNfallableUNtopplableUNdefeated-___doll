@@ -24,6 +24,9 @@ class Doll{
     float obj_height = -3* radius;
     boolean held = false;
     
+    //rolling friction --modify theta by a decaing expontnet function -=- xiaoshen was right LOL - when delta theta < some value then it stops
+    
+    
 //coordinate of the point on the doll that the doll will rest on
     Doll(float x, float y, float ground){
       this.object_x = x;
@@ -37,24 +40,28 @@ class Doll{
     }
     
     void move(float t){
+          
+        print(doll.angle + "\n");
         if (angle > PI) angle = PI;
         if (angle < 0) angle = 0;
-        if (!held){
-          
-          time += t;
-          angular_acceleration = calc_acceleration();
-          angular_velocity += t * angular_acceleration;
-          float delta_angle = t * angular_velocity;
-          angle += delta_angle;
-          // calc change in x
-          int neg = 1;
-          if (angle < 0){
-              neg = -1;
-          }
-          object_x += neg * radius * delta_angle;
-          // set new y
-          object_y = ground- radius;
+        if (held){
+          angular_velocity = 0;
+          return;
         }
+        time += t;
+        angular_acceleration = calc_acceleration();
+        angular_velocity += t * angular_acceleration;
+        float delta_angle = t * angular_velocity;
+        angle += delta_angle;
+        // calc change in x
+        int neg = 1;
+        if (angle > 0){
+            neg = -1;
+        }
+        object_x += neg * radius * delta_angle;
+        // set new y
+        object_y = ground- radius;
+        
     }
     //cm to point of contact
     float get_cm_radius(){
@@ -78,7 +85,7 @@ class Doll{
         //move reference coordinates to body
         translate(object_x, object_y);
         push();
-        rotate(angle - PI/2);
+        rotate(PI/2 - angle );
         
         // draw the body
         stroke(0);
@@ -116,7 +123,14 @@ class Doll{
         float delta_x = object_x - mouseX;
         float delta_y = object_y - mouseY;
         float holdangle = atan(delta_y / delta_x);
-        //if (cos(holdangle) > 0) holdangle -= PI;
+        print("COOL" + (delta_x < 0));
+        print(doll.angle + "\n");
+        if (delta_x < 0){
+          //holdangle += PI;
+          holdangle = -1 * holdangle;
+        }else{
+          holdangle = PI - holdangle;
+        }
         angle = holdangle;
 
       }
