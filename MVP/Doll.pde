@@ -36,13 +36,12 @@ class Doll{
     void move(float t){
         time += t;
         angular_acceleration = calc_acceleration();
-        print(angular_acceleration);
         angular_velocity += t * angular_acceleration;
         float delta_angle = t * angular_velocity;
         angle += delta_angle;
         // calc change in x
         int neg = 1;
-        if (angle- PI/2 < 0){
+        if (angle < 0){
             neg = -1;
         }
         object_x += neg * radius * delta_angle;
@@ -58,7 +57,7 @@ class Doll{
         float g = 9.81;
         float cm_theta = PI/2 - angle;
         int neg = 1;
-        if (cm_theta < 0){
+        if (PI/2 - cm_theta < 0){
           neg = -1;
           cm_theta *=-1;
         }
@@ -79,7 +78,6 @@ class Doll{
         circle(0, 0, radius * 2);
         
         triangle(-1 * radius, 0, 0, -3 *radius,radius, 0);
-        //System.out.printf("x1 %f, y1 %f, x2 %f, y2%f, x3%f, y3%f",object_x-radius, object_y, object_x, object_y +radius, object_x + radius, object_y);
 
         push();
 

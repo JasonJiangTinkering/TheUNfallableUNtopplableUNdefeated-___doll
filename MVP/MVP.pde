@@ -16,8 +16,4 @@ void draw(){
     background(255);
     doll.move(1 / frames_per_sec);
     doll.render();
-    
-    circle(mouseX, mouseY, 10);
-    //System.out.printf("mousex %d, mousey %d", mouseX, mouseY);
-    
 }
