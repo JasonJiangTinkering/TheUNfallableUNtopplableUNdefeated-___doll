@@ -1,18 +1,16 @@
 class Doll{
     // assume that for each degree the radius at that angle is the furthest point
     // assume that the radius is the same for all angles
-    float radius = 5;
+    float radius = 50;
 
-    // 0 : point straight up
-    // - 90 : point right
-    // 90 : point left
-    float angle = 0;
+    // pi/2 points straights up
+    float angle = PI/2;
     // where is the object compared to the 
     float object_x = 0;
     float object_y = radius;
     // how offset the center of mass is from the center point used to draw the object
     float offset_cx = 0;
-    float offset_cy = 0;
+    float offset_cy = radius / 2;
     // assume rolling with no slipping 
     float angular_acceleration = 0;
     float angular_velocity = 0;
@@ -22,10 +20,13 @@ class Doll{
     // in m/s^2  
     float gravity = 9.81;
     
+//coordinate of the point on the doll that the doll will rest on
     Doll(float x, float y){
       this.object_x = x;
-      this.object_y = y;
+      this.object_y = y - radius;
     }
+    
+    //takes in a value from 0 - 90
     void set_angle(float angle){
         this.angle = angle;
     }
@@ -52,28 +53,30 @@ class Doll{
     }
     
     void render(){
-        // draw the body
-        //print("good try");
+      // using circles to represent verticties + important points
+        //move reference coordinates to body
         push();
         rotate(angle);
         translate(object_x, object_y);
-        strokeWeight(1);
-        stroke(30);
-        fill(0);
-        System.out.printf("object x: %f, object y: %f\n", object_x, object_y);
-        // because of assumtion of radius-- jcenter circle
-        circle(object_x, object_y, radius);
-        // for visualisation center triangle dummy
-        float radius_y = radius * sin(angle);
-        float radius_x = radius * cos(angle);
-        float triy_bot = object_y - radius_y;
-        float triy_top = object_y + radius_y;
-        float trix_left = object_x - radius_x ;
-        float trix_right = object_x + radius_x;
-        triangle(object_x, triy_top, trix_left, triy_bot, trix_right, triy_bot);
+        // draw the body
+        stroke(0);
+        fill(126); //black center of object         
+        circle(0, 0, 10);
+        System.out.printf("object_x %f, object_y %f, angle %f\n", object_x, object_y, angle);
+   
+        float highestPointX = radius * cos(angle); // relitive X distance from center of object to top of object
+        float highestPointY = radius * sin(angle); // relitive y distance from center of object to top of object
+        
+        circle(highestPointX, highestPointY, radius);
+        System.out.printf("tritop_x %f, tritop_y %f, radius %f \n", highestPointY, highestPointX, radius);
+        
+        //circle(tritop_x, tritop_y, radius);
+        
+        //System.out.printf("trix_top: %f, triy_top: %f, trix_left: %f, triy_bot: %f, trix_right: %f, triy_bot: %f");
+        //triangle(trix_, triy_top, trix_left, triy_bot, trix_right, triy_bot);
         push();
 
-        // draw the center of mass
+        // draw the center ofujm  mass
         translate(offset_cx, offset_cy);
         circle(0, 0, 5);
         pop();
