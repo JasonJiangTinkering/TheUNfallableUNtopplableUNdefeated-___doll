@@ -45,7 +45,7 @@ class Doll{
         print(doll.angle + "\n");
         if (angle > PI) angle = PI;
         if (angle < 0) angle = 0;
-        if (held){
+        if (held){//
           angular_velocity = 0;
           return;
         }
