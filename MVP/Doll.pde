@@ -22,16 +22,18 @@ class Doll{
     float gravity = 9.81;
     float pullable_button_d = 30;
     float obj_height = -3* radius;
+    float rollingFrictionConstant;
+    float vvSmoll = 0.01;
     boolean held = false;
     
     //rolling friction --modify theta by a decaing expontnet function -=- xiaoshen was right LOL - when delta theta < some value then it stops
     
-    
 //coordinate of the point on the doll that the doll will rest on
-    Doll(float x, float y, float ground){
+    Doll(float x, float y, float ground, float rollingFrictionConstant){
       this.object_x = x;
       this.object_y = y - radius;
       this.ground = ground;
+      this.rollingFrictionConstant = rollingFrictionConstant;
     }
     
     //takes in a value from 0 - 90
@@ -40,7 +42,6 @@ class Doll{
     }
     
     void move(float t){
-          
         print(doll.angle + "\n");
         if (angle > PI) angle = PI;
         if (angle < 0) angle = 0;
@@ -51,6 +52,14 @@ class Doll{
         time += t;
         angular_acceleration = calc_acceleration();
         angular_velocity += t * angular_acceleration;
+        float hold = calc_decayPercentage();
+        
+        angular_velocity *= hold;
+        //
+        if (hold < vvSmoll){
+          angular_velocity = 0;
+        }
+        print(time +"constant: " + hold + " velocity" + angular_velocity);
         float delta_angle = t * angular_velocity;
         angle += delta_angle;
         // calc change in x
@@ -61,13 +70,16 @@ class Doll{
         object_x += neg * radius * delta_angle;
         // set new y
         object_y = ground- radius;
-        
     }
     //cm to point of contact
     float get_cm_radius(){
       return sqrt(pow(offset_cx, 2) + pow(radius - offset_cy, 2));
     }
-      
+    
+    float calc_decayPercentage(){
+      return exp(-time * rollingFrictionConstant);
+    }
+    
     float calc_acceleration(){
         float g = 9.81;
         float cm_theta = PI/2 - angle;
@@ -77,7 +89,9 @@ class Doll{
           cm_theta *=-1;
         }
         float cm_r = get_cm_radius();
-        return neg * g * sin(cm_theta)/cm_r;
+        
+
+        return neg * g * sin(cm_theta)/cm_r ;
     }
     
     void render(){
@@ -118,6 +132,7 @@ class Doll{
     // only when mouse is pressed
     void test_held(){
       if (mousePressed){
+        time = 0;
         held = true;
         //compared to center of object
         float delta_x = object_x - mouseX;
