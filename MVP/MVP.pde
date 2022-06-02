@@ -3,7 +3,10 @@ Doll doll;
 float frames_per_sec = 60;
 float exponential_decay_constant = .002/8;
 UI ui;
+HScrollbar test;
 void setup(){
+  //testing scroll bar
+    
     size(1500, 1000);//set processing settings
     float platform_height = height * 2/3;
 
