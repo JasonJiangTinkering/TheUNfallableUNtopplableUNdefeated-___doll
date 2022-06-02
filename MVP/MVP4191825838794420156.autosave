@@ -1,0 +1,28 @@
+//set global variables
+float time = 0;
+Doll doll;
+float frames_per_sec = 60;
+PImage bg;
+
+  
+void setup(){
+
+  
+    size(1400, 612);//set processing settings
+    frameRate(frames_per_sec);    
+    fill(255);
+ //initiate global variables
+    doll = new Doll(width/2, height, height);
+    doll.angle = PI;
+    bg = loadImage("sun.png");
+    bg.resize(1400, 612);
+
+}
+
+void draw(){
+
+  image(bg, 0, 0);
+    //background(255);
+    doll.move(1 / frames_per_sec);
+    doll.render();
+}

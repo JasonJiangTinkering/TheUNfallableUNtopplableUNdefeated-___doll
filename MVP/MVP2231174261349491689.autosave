@@ -1,0 +1,21 @@
+//import Doll.java
+
+void setup(){
+  size(1400, 612);
+    //doll = new Doll.doll();
+    //time = .1;
+}
+
+//draw(){
+//    canvas.clear;
+//    draw.move(time)
+//    draw.render()
+//}
+PImage bg;
+
+
+void draw(){
+  bg = loadImage("sun.png");
+  bg.resize(1400, 612);
+  image(bg, 0, 0);
+}
