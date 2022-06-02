@@ -42,7 +42,7 @@ class Doll{
     }
     
     void move(float t){
-        print(doll.angle + "\n");
+        //print(doll.angle + "\n");
         if (angle > PI) angle = PI;
         if (angle < 0) angle = 0;
         if (held){//
@@ -59,7 +59,7 @@ class Doll{
         if (hold < vvSmoll){
           angular_velocity = 0;
         }
-        print(time +"constant: " + hold + " velocity" + angular_velocity);
+        //print(time +"constant: " + hold + " velocity" + angular_velocity);
         float delta_angle = t * angular_velocity;
         angle += delta_angle;
         // calc change in x
@@ -129,6 +129,7 @@ class Doll{
         pop();
         pop();
     }
+    
     // only when mouse is pressed
     void test_held(){
       if (mousePressed){
@@ -138,8 +139,8 @@ class Doll{
         float delta_x = object_x - mouseX;
         float delta_y = object_y - mouseY;
         float holdangle = atan(delta_y / delta_x);
-        print("COOL" + (delta_x < 0));
-        print(doll.angle + "\n");
+        //print("COOL" + (delta_x < 0));
+        //print(doll.angle + "\n");
         if (delta_x < 0){
           //holdangle += PI;
           holdangle = -1 * holdangle;
