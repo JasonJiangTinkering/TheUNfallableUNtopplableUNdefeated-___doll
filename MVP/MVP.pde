@@ -9,7 +9,6 @@ void setup(){
     
     size(1500, 1000);//set processing settings
     float platform_height = height * 2/3;
-
     frameRate(frames_per_sec);
     fill(255);
  //initiate global variables
@@ -27,5 +26,9 @@ void draw(){
     doll.test_held();
     doll.move(4 / frames_per_sec);
     doll.render();
- 
+    //println(mouseX +" , "+ mouseY);
+}
+void mouseClicked(){
+  //println("click");
+   ui.testClick();
 }
