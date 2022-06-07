@@ -59,11 +59,18 @@ class Button{
      pop();
      pop();
   }
-  void isPressed(){
+  void isPressed(StringList events){
     if (circleOver){
       print(circleOver);
       toggle = !toggle;
+        if (toggle){
+      // go
+        events.append("go");
+      }else {
+        events.append("pause");
+      }
     }
+
   }
     
 }

@@ -1,9 +1,10 @@
 class UI{
   float platform_height;
   HScrollbar hs1, hs2, hs3, hs4;
-  
+  StringList events;
   Button play_pause;
   UI(float platform_height){
+    events = new StringList();
     this.platform_height = platform_height;
     hs1 = new HScrollbar(2*width /3, (height - platform_height) * .3 + platform_height, round(.25 * width), 16, 16);    
     hs2 = new HScrollbar(2*width /3, (height - platform_height) * .6 + platform_height, round(.25 * width), 16, 16);   
@@ -15,6 +16,11 @@ class UI{
     play_pause.normal = loadImage("play.png");
     play_pause.toggled = loadImage("pause.png");
   }
+  
+  void reset_events(){
+    events = new StringList();
+  }
+  
   void draw(float time){
     push();
     //draw platform
@@ -40,7 +46,8 @@ class UI{
     hs4.display();    
     play_pause.update();
   }
+  
   void testClick(){
-    play_pause.isPressed();
+    play_pause.isPressed(events);
   }
 }

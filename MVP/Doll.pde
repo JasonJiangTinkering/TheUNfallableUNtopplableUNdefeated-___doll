@@ -25,7 +25,6 @@ class Doll{
     float rollingFrictionConstant;
     float vvSmoll = 0.01;
     boolean held = false;
-    
     //rolling friction --modify theta by a decaing expontnet function -=- xiaoshen was right LOL - when delta theta < some value then it stops
     
 //coordinate of the point on the doll that the doll will rest on
