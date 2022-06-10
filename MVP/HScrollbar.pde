@@ -9,9 +9,12 @@ class HScrollbar {
   boolean locked;
   float ratio;
   float value;
+  float min_value;
+  float max_value; 
   int text_yoffset = 5;
   int num_of_decimals = 2; // how accurate the value should be
-  HScrollbar (float xp, float yp, int sw, int sh, int l) {
+  
+  HScrollbar (float xp, float yp, int sw, int sh, int l, float min_value, float max_value) {
     swidth = sw;
     sheight = sh;
     int widthtoheight = sw - sh;
@@ -23,16 +26,30 @@ class HScrollbar {
     sposMin = xpos;
     sposMax = xpos + swidth - sheight;
     loose = l;
+    this.min_value = min_value;
+    this.max_value = max_value;
+  }
+  void setCurrentValue(float x){
+    //given default value and min max, find percentage of value that it represents, assign spos
+    spos = sposMin + (x*(sposMax- sposMin))/(max_value - min_value);
+    newspos = spos;
   }
   void drawText() {
     push();
     fill(255);
-    text(str(value), xpos, ypos - text_yoffset);
+    // draw min value
+     text(str(min_value), xpos, ypos - text_yoffset);
+    // draw max_value
+    push();
+    textAlign(RIGHT);
+    text(str(max_value), xpos + swidth, ypos - text_yoffset);
+    pop();
+    text(str(value), xpos + swidth/2, ypos - text_yoffset);
     pop();
   }
   
   void calcValue(){
-    value = (spos - sposMin) / (sposMax - sposMin);
+    value = min_value + ((max_value - min_value) * (spos - sposMin) / (sposMax - sposMin));
     //round to nearest power of 10
     value = float(floor(value*pow(10, num_of_decimals))) / pow(10, num_of_decimals);
 }

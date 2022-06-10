@@ -25,6 +25,7 @@ class Doll{
     float rollingFrictionConstant;
     float vvSmoll = 0.01;
     float protractor_radius = 400;
+    UI ui;
     boolean held = false;
     //rolling friction --modify theta by a decaing expontnet function -=- xiaoshen was right LOL - when delta theta < some value then it stops
     
@@ -166,7 +167,8 @@ class Doll{
           holdangle =0;
         }
         angle = holdangle;
-        println(degrees());
+        ui.starting_angle.setCurrentValue(angle * 180 /PI);
+        //println(degrees());
       }
       else{
         held = false;

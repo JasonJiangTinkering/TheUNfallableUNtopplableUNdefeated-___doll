@@ -9,16 +9,20 @@ class UI{
   int protractor_yoffset = 11; //how many pixels the center of the measuring thingy is from the bottom of image
   ArrayList<Button> ButtonList;
   ArrayList<HScrollbar> ScrollbarList;
-  UI(float platform_height){
+  UI(float platform_height, Doll doll){
     ButtonList = new ArrayList<Button>();
     ScrollbarList = new ArrayList<HScrollbar>();
     events = new StringList();
     this.platform_height = platform_height;
-    
-    center_of_mass = new HScrollbar(2*width /3, (height - platform_height) * .3 + platform_height, round(.25 * width), 16, 16);    
-    gravity = new HScrollbar(2*width /3, (height - platform_height) * .6 + platform_height, round(.25 * width), 16, 16);   
-    starting_angle = new HScrollbar(width /3, (height - platform_height) * .3 + platform_height, round(.25 * width), 16, 16);    
-    rolling_friction = new HScrollbar(width /3, (height - platform_height) * .6 + platform_height, round(.25 * width), 16, 16);   
+    this.doll = doll;
+    //min value, 
+    // not quite sure what to do with this: suggestionss touching base, max, top of structure
+    center_of_mass = new HScrollbar(2*width /3, (height - platform_height) * .3 + platform_height, round(.25 * width), 16, 16, 0, 1);
+    //min value, 0 no gravity, max ~3 times earth gravity
+    gravity = new HScrollbar(2*width /3, (height - platform_height) * .6 + platform_height, round(.25 * width), 16, 16, 0, 3 * 9.81);
+    starting_angle = new HScrollbar(width /3, (height - platform_height) * .3 + platform_height, round(.25 * width), 16, 16, 0 , 180); 
+    // not sure start with 0 and twice the rollingFrictionConstant that the doll starts with
+    rolling_friction = new HScrollbar(width /3, (height - platform_height) * .6 + platform_height, round(.25 * width), 16, 16, 0, doll.rollingFrictionConstant *2);   
     ScrollbarList.add(center_of_mass);
     ScrollbarList.add(gravity);
     ScrollbarList.add(starting_angle);
@@ -79,7 +83,7 @@ class UI{
       ScrollbarList.get(i).display();
     }
     //set angle of doll using slider
-    doll.angle = starting_angle.value;
+    doll.angle = starting_angle.value * PI / 180;
 
     pop();
   }

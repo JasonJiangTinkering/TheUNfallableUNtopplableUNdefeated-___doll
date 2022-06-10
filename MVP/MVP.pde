@@ -15,9 +15,10 @@ void setup(){
     frameRate(frames_per_sec);
     fill(255);
  //initiate global variables
-    ui = new UI(global.platform_height);
+    
     doll = new Doll(width/2, global.platform_height, global.platform_height, exponential_decay_constant);
-    ui.doll= doll; //<>//
+    ui = new UI(global.platform_height, doll);
+    doll.ui = ui; //<>//
     ui.draw_background(status); //<>//
 }
 
