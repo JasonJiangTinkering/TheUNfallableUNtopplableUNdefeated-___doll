@@ -9,12 +9,19 @@ class UI{
   int protractor_yoffset = 11; //how many pixels the center of the measuring thingy is from the bottom of image
   ArrayList<Button> ButtonList;
   ArrayList<HScrollbar> ScrollbarList;
+  ArrayList<Graph> GraphList;
+  Graph graph_angle;
   UI(float platform_height, Doll doll){
     ButtonList = new ArrayList<Button>();
     ScrollbarList = new ArrayList<HScrollbar>();
+    GraphList = new ArrayList<Graph>();
     events = new StringList();
     this.platform_height = platform_height;
     this.doll = doll;
+    graph_angle = new Graph("Doll Angle", color(0,0,255));
+    GraphList.add(graph_angle);
+    
+    
     //min value, 
     // not quite sure what to do with this: suggestionss touching base, max, top of structure
     center_of_mass = new HScrollbar(2*width /3, (height - platform_height) * .3 + platform_height, round(.25 * width), 16, 16, 0, doll.radius, doll.offset_cy, "center of mass");
@@ -68,7 +75,14 @@ class UI{
       ButtonList.get(i).update();
     }
   }
-  
+  void draw_go(float time_passed){
+    //plot points
+    graph_angle.plot(doll.angle, time_passed);
+    //draw graph
+    for (int i = 0; i < GraphList.size(); i ++){
+      GraphList.get(i).render(14, 529, 352, 734);
+    }
+  }
   void draw_background(String status){
     if (status == "setup"){
       draw_setupUI();

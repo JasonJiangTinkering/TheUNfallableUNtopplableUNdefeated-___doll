@@ -30,17 +30,20 @@ void draw(){
       //print("setup");
       doll.test_held(); 
     }else{
-      doll.move(4 / frames_per_sec); // doubled time to make it look pretty, omg we need to fix this later -- JASON XIAOSHEN DONT IGNORE THIS IT WILL BE THE END OF UR GRADES SADGE
+      float time_passed = 4 / frames_per_sec;
+      doll.move(time_passed); 
+      ui.draw_go(time_passed);
     }
-    doll.render();
     ui.draw_background(status);
+    doll.render();
+    
     
     redraw();
     ////respond to all events
     for (int i=0; i < ui.events.size(); i++){
       switch (ui.events.get(i)){
         case "reset": //<>//
-          doll.reset(width/2, global.platform_height, global.platform_height, exponential_decay_constant);
+          doll.reset(width/2, global.platform_height, global.platform_height);
           status = "setup";
           println("Changing to setup");
           break;
@@ -62,6 +65,6 @@ void draw(){
 
 }
 void mouseClicked(){
-  //println(mouseX + " "+ mouseY);
+  println(mouseX + " "+ mouseY);
    ui.testClick();
 }

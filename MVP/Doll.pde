@@ -38,16 +38,13 @@ class Doll{
       this.rollingFrictionConstant = rollingFrictionConstant;
     }
     
-     void reset(float x, float y, float ground, float rollingFrictionConstant){
+     void reset(float x, float y, float ground){
       time = 0;
-      angle = PI/2;
       angular_acceleration =0;
       angular_velocity=0;
       this.object_x = x;
       this.object_y = y - radius;
       this.ground = ground;
-      this.rollingFrictionConstant = rollingFrictionConstant;
-      
     }
 
     void move(float t){
