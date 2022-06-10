@@ -9,7 +9,8 @@ String status = "setup";
 HScrollbar test;
 void setup(){
   //testing scroll bar
-    size(1500, 1000);//set processing settings
+    fullScreen();
+    //size(1500, 1000);//set processing settings
     global.platform_height = (float(height) * 2)/3;
     frameRate(frames_per_sec);
     fill(255);
@@ -48,7 +49,8 @@ void draw(){
           break;
         case "pause": 
           status = "pause";
-
+        case "exit":
+          exit();
         default:
           println("Changing to None");
           break;
