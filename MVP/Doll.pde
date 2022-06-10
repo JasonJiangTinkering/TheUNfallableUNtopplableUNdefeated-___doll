@@ -24,24 +24,34 @@ class Doll{
     float obj_height = -3* radius;
     float rollingFrictionConstant;
     float vvSmoll = 0.01;
+    float protractor_radius = 400;
     boolean held = false;
     //rolling friction --modify theta by a decaing expontnet function -=- xiaoshen was right LOL - when delta theta < some value then it stops
     
 //coordinate of the point on the doll that the doll will rest on
     Doll(float x, float y, float ground, float rollingFrictionConstant){
+      
       this.object_x = x;
       this.object_y = y - radius;
       this.ground = ground;
       this.rollingFrictionConstant = rollingFrictionConstant;
     }
     
-    //takes in a value from 0 - 90
-    void set_angle(float angle){
-        this.angle = angle;
+     void reset(float x, float y, float ground, float rollingFrictionConstant){
+      time = 0;
+      angle = PI/2;
+      angular_acceleration =0;
+      angular_velocity=0;
+      this.object_x = x;
+      this.object_y = y - radius;
+      this.ground = ground;
+      this.rollingFrictionConstant = rollingFrictionConstant;
+      
+        println(doll.object_x + " "+doll.object_y);
     }
-    
+
     void move(float t){
-        //print(doll.angle + "\n");
+        //println(doll.object_x + " "+doll.object_y);
         if (angle > PI) angle = PI;
         if (angle < 0) angle = 0;
         if (held){//
@@ -96,6 +106,7 @@ class Doll{
     void render(){
       // using circles to represent verticties + important points
         //move reference coordinates to body
+        push();
         translate(object_x, object_y);
         push();
         rotate(PI/2 - angle );
@@ -127,11 +138,12 @@ class Doll{
           circle(0, 0, pullable_button_d);
         pop();
         pop();
+        pop();
     }
     
     // only when mouse is pressed
     void test_held(){
-      if (mousePressed){
+      if (mousePressed && dist(mouseX, mouseY, object_x, object_y) < protractor_radius){
         time = 0;
         held = true;
         //compared to center of object

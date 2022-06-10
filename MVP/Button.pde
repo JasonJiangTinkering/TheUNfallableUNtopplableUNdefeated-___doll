@@ -33,6 +33,7 @@ class Button{
   }
   
   void update() { //test if mouse is over + draws the screen // maybe should seperate if lag 
+  
      push();
      if (dist(mouseX, mouseY, circleX, circleY) < circleSize/2){
        circleOver = true;
@@ -59,6 +60,7 @@ class Button{
      pop();
      pop();
   }
+  
   void isPressed(StringList events){
     if (circleOver){
       print(circleOver);
@@ -67,7 +69,7 @@ class Button{
       // go
         events.append("go");
       }else {
-        events.append("pause");
+        events.append("reset");
       }
     }
 

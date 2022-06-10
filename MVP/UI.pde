@@ -2,7 +2,9 @@ class UI{
   float platform_height;
   HScrollbar hs1, hs2, hs3, hs4;
   StringList events;
+  PImage protractor;
   Button play_pause;
+  Doll doll;
   UI(float platform_height){
     events = new StringList();
     this.platform_height = platform_height;
@@ -14,7 +16,9 @@ class UI{
     //draw stop/play functions
     play_pause = new Button(150, 50);
     play_pause.normal = loadImage("play.png");
-    play_pause.toggled = loadImage("pause.png");
+    play_pause.toggled = loadImage("reset.png");
+    
+    //protractor = loadImage("protractor (2).png");
   }
   
   void reset_events(){
@@ -26,7 +30,7 @@ class UI{
     //draw platform
     fill(0);
     rect(0, platform_height, width, height);
-    pop();
+    
     
     //draw time
     fill(0);
@@ -34,8 +38,26 @@ class UI{
     time = float(int(time * 1000))/1000;
     textAlign(LEFT,TOP);
     text(str(time), 0, 0);
+    pop();
+    play_pause.update();
+  }
+  
+  void draw_background(String status){
+    if (status == "setup"){
+      draw_setupUI();
+    }
+  }
+  
+  void draw_setupUI(){
+    push();
+    //fill(0);
+    //ellipseMode(CENTER);
     
-    //draw sliders for variables
+    //println(width/2, platform_height);
+    ////println(doll.protractor_radius);
+    //ellipse(width/2, platform_height, 5, 5);
+    
+     //draw sliders for variables
     hs1.update();
     hs1.display();
     hs2.update();
@@ -44,7 +66,7 @@ class UI{
     hs3.display();
     hs4.update();
     hs4.display();    
-    play_pause.update();
+    pop();
   }
   
   void testClick(){
