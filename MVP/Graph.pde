@@ -17,6 +17,10 @@ class Graph{
   }
   
   void plot(float value, float delta_time){
+    time_elapsed += delta_time;
+    if (value > max_value){
+      max_value = value;
+    }
     values.add(value);
     times.add(delta_time);
   }
@@ -33,9 +37,23 @@ class Graph{
     x2 -= margin;
     y2 -= margin;
     rect(x1, y1, x2, y2);
+    fill(0);
     // create + display scale
-    
+    textAlign(LEFT, CENTER);
+    text('-'+str(max_value), x1, y1);
     //draw points
+    fill(plotColor);
+    float cur_index_time = 0;
+    for (int i = 0; i < values.size(); i++){
+      float ploty= values.get(i);
+      cur_index_time += times.get(i);
+      push();
+      translate(x1, y1);
+      float plotx = ((cur_index_time / time_elapsed) * (x2 - x1)) + x1;
+      ellipse( plotx, ploty, plot_size, plot_size);
+      pop();
+    }
+    
     
     pop();
   }

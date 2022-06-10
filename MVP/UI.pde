@@ -77,7 +77,7 @@ class UI{
   }
   void draw_go(float time_passed){
     //plot points
-    graph_angle.plot(doll.angle, time_passed);
+    graph_angle.plot(doll.angle * 180/ PI, time_passed);
     //draw graph
     for (int i = 0; i < GraphList.size(); i ++){
       GraphList.get(i).render(14, 529, 352, 734);
