@@ -15,6 +15,10 @@ class Graph{
     this.title = title;
     this.plotColor = plotColor;
   }
+ void reset(){
+    values = new ArrayList<Float>();
+    times = new ArrayList <Float>();
+ }
   
   void plot(float value, float delta_time){
     time_elapsed += delta_time;
@@ -41,6 +45,10 @@ class Graph{
     // create + display scale
     textAlign(LEFT, CENTER);
     text('-'+str(max_value), x1, y1);
+    
+    // display title
+    textAlign(CENTER);
+    text(title, (x1 + x2)/2, y1 + margin *2);
     //draw points
     fill(plotColor);
     float cur_index_time = 0;
@@ -49,8 +57,9 @@ class Graph{
       cur_index_time += times.get(i);
       push();
       translate(x1, y1);
-      float plotx = ((cur_index_time / time_elapsed) * (x2 - x1)) + x1;
-      ellipse( plotx, ploty, plot_size, plot_size);
+      float plotx = ((cur_index_time / time_elapsed) * (x2 - x1));
+      rectMode(CENTER);
+      rect(plotx, ploty, plot_size, plot_size);
       pop();
     }
     

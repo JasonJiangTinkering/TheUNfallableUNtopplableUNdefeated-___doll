@@ -45,6 +45,7 @@ void draw(){
         case "reset": //<>//
           doll.reset(width/2, global.platform_height, global.platform_height);
           status = "setup";
+          ui.setup_reset();
           println("Changing to setup");
           break;
         case "go":

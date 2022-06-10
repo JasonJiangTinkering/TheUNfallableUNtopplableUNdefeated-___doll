@@ -75,6 +75,11 @@ class UI{
       ButtonList.get(i).update();
     }
   }
+  void setup_reset(){
+    for (int i = 0; i < GraphList.size(); i ++){
+      GraphList.get(i).reset();
+    }
+  }
   void draw_go(float time_passed){
     //plot points
     graph_angle.plot(doll.angle * 180/ PI, time_passed);
