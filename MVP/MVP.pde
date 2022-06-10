@@ -17,7 +17,6 @@ void setup(){
     ui = new UI(global.platform_height);
     doll = new Doll(width/2, global.platform_height, global.platform_height, exponential_decay_constant);
     ui.doll= doll; //<>//
-    println(global.platform_height); //<>//
     ui.draw_background(status); //<>//
 }
 
@@ -38,8 +37,7 @@ void draw(){
     ////respond to all events
     for (int i=0; i < ui.events.size(); i++){
       switch (ui.events.get(i)){
-        case "reset":
-          println(global.platform_height); //<>//
+        case "reset": //<>//
           doll.reset(width/2, global.platform_height, global.platform_height, exponential_decay_constant);
           status = "setup";
           println("Changing to setup");

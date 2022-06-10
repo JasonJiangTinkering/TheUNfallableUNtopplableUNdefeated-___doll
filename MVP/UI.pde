@@ -5,6 +5,7 @@ class UI{
   PImage protractor;
   Button play_pause;
   Doll doll;
+  int protractor_yoffset = 11; //how many pixels the center of the measuring thingy is from the bottom of image
   UI(float platform_height){
     events = new StringList();
     this.platform_height = platform_height;
@@ -18,7 +19,8 @@ class UI{
     play_pause.normal = loadImage("play.png");
     play_pause.toggled = loadImage("reset.png");
     
-    //protractor = loadImage("protractor (2).png");
+    protractor = loadImage("protractor (2).png");
+     
   }
   
   void reset_events(){
@@ -50,12 +52,9 @@ class UI{
   
   void draw_setupUI(){
     push();
-    //fill(0);
-    //ellipseMode(CENTER);
-    
-    //println(width/2, platform_height);
-    ////println(doll.protractor_radius);
-    //ellipse(width/2, platform_height, 5, 5);
+    fill(0);
+    imageMode(CENTER);
+    image(protractor, width/2, platform_height - doll.protractor_radius/2 - protractor_yoffset, 2*doll.protractor_radius, doll.protractor_radius);
     
      //draw sliders for variables
     hs1.update();

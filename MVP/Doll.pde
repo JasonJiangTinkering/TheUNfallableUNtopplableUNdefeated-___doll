@@ -47,11 +47,9 @@ class Doll{
       this.ground = ground;
       this.rollingFrictionConstant = rollingFrictionConstant;
       
-        println(doll.object_x + " "+doll.object_y);
     }
 
     void move(float t){
-        //println(doll.object_x + " "+doll.object_y);
         if (angle > PI) angle = PI;
         if (angle < 0) angle = 0;
         if (held){//
@@ -68,7 +66,6 @@ class Doll{
         if (hold < vvSmoll){
           angular_velocity = 0;
         }
-        //print(time +"constant: " + hold + " velocity" + angular_velocity);
         float delta_angle = t * angular_velocity;
         angle += delta_angle;
         // calc change in x
@@ -113,9 +110,12 @@ class Doll{
         
         // draw the body
         stroke(0);
+        
         fill(126); //black center of object         
         circle(0, 0, radius * 2);
-        
+        fill(255);//draw center of circle
+        circle(0, 0, 5);
+
         triangle(-1 * radius, 0, 0, obj_height, radius, 0);
 
         push();
@@ -140,26 +140,33 @@ class Doll{
         pop();
         pop();
     }
-    
+    // returns angle of doll in degrees
+    float degrees(){
+      return (angle/PI * 180);
+    }
     // only when mouse is pressed
     void test_held(){
-      if (mousePressed && dist(mouseX, mouseY, object_x, object_y) < protractor_radius){
+      if (mousePressed && mouseY < ground && dist(mouseX, mouseY, object_x, object_y) < protractor_radius){
         time = 0;
         held = true;
         //compared to center of object
         float delta_x = object_x - mouseX;
         float delta_y = object_y - mouseY;
         float holdangle = atan(delta_y / delta_x);
-        //print("COOL" + (delta_x < 0));
-        //print(doll.angle + "\n");
         if (delta_x < 0){
           //holdangle += PI;
           holdangle = -1 * holdangle;
         }else{
           holdangle = PI - holdangle;
         }
+        if (holdangle > PI){
+          holdangle = PI;
+        }
+        if (holdangle < 0){
+          holdangle =0;
+        }
         angle = holdangle;
-
+        println(degrees());
       }
       else{
         held = false;

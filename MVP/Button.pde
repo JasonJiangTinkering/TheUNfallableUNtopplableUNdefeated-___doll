@@ -44,9 +44,7 @@ class Button{
       }
      ellipseMode(CENTER);
      imageMode(CENTER);
-     //println("center: " + circleX  + " + " + circleY);
      circle(circleX, circleY, circleSize);
-     //println(circleOver);
      push();
      translate(circleX, circleY);
      if (!toggle){
