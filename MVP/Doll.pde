@@ -145,6 +145,7 @@ class Doll{
     float degrees(){
       return (angle/PI * 180);
     }
+    
     // only when mouse is pressed
     void test_held(){
       if (mousePressed && mouseY < ground && dist(mouseX, mouseY, object_x, object_y) < protractor_radius){

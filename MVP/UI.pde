@@ -17,12 +17,15 @@ class UI{
     this.doll = doll;
     //min value, 
     // not quite sure what to do with this: suggestionss touching base, max, top of structure
-    center_of_mass = new HScrollbar(2*width /3, (height - platform_height) * .3 + platform_height, round(.25 * width), 16, 16, 0, 1);
+    center_of_mass = new HScrollbar(2*width /3, (height - platform_height) * .3 + platform_height, round(.25 * width), 16, 16, 0, doll.radius, doll.offset_cy, "center of mass");
     //min value, 0 no gravity, max ~3 times earth gravity
-    gravity = new HScrollbar(2*width /3, (height - platform_height) * .6 + platform_height, round(.25 * width), 16, 16, 0, 3 * 9.81);
-    starting_angle = new HScrollbar(width /3, (height - platform_height) * .3 + platform_height, round(.25 * width), 16, 16, 0 , 180); 
+    gravity = new HScrollbar(2*width /3, (height - platform_height) * .6 + platform_height, round(.25 * width), 16, 16, 0, 3 * 9.81, doll.gravity, "gravity");
+    starting_angle = new HScrollbar(width /3, (height - platform_height) * .3 + platform_height, round(.25 * width), 16, 16, 0 , 180, doll.angle*180/PI, "starting angle"); 
     // not sure start with 0 and twice the rollingFrictionConstant that the doll starts with
-    rolling_friction = new HScrollbar(width /3, (height - platform_height) * .6 + platform_height, round(.25 * width), 16, 16, 0, doll.rollingFrictionConstant *2);   
+    rolling_friction = new HScrollbar(width /3,
+    (height - platform_height) * .6 + platform_height,
+    round(.25 * width), 16, 16, 0, doll.rollingFrictionConstant *2, doll.rollingFrictionConstant, "rolling friction");   
+    rolling_friction.num_of_decimals = 6;
     ScrollbarList.add(center_of_mass);
     ScrollbarList.add(gravity);
     ScrollbarList.add(starting_angle);
@@ -82,9 +85,12 @@ class UI{
       ScrollbarList.get(i).update();
       ScrollbarList.get(i).display();
     }
-    //set angle of doll using slider
+    //set properties of doll using slider
     doll.angle = starting_angle.value * PI / 180;
-
+    doll.offset_cy = center_of_mass.value;
+    doll.gravity = gravity.value;
+    doll.rollingFrictionConstant = rolling_friction.value;
+     // all other sliders are calculated and proccessed on start of the program
     pop();
   }
   
