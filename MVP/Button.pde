@@ -54,7 +54,7 @@ class Button{
   }
   Button(String displayMode, int x, int y, String normalEvent, String toggleEvent, int margin){
     circleSize = 93;
-    float changeRadius = margin + circleSize/2
+    int changeRadius = margin + circleSize/2;
     if (displayMode == "NE"){
       circleX = x - changeRadius;
       circleY = y + changeRadius;

@@ -10,7 +10,7 @@ HScrollbar test;
 void setup(){
   //testing scroll bar
     fullScreen();
-    //size(1500, 1000);//set processing settings
+    //size(1500, 1000);//had some issues with screen displaying
     global.platform_height = (float(height) * 2)/3;
     frameRate(frames_per_sec);
     fill(255);
