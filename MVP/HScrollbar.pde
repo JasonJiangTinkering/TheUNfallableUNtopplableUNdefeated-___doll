@@ -8,8 +8,15 @@ class HScrollbar {
   boolean over;           // is the mouse over the slider?
   boolean locked;
   float ratio;
-
-  HScrollbar (float xp, float yp, int sw, int sh, int l) {
+  float value;
+  float min_value;
+  float max_value; 
+  String title;
+  int text_yoffset = 5;
+  int title_yoffset = 20; // yoffset putting the title above the current value
+  int num_of_decimals = 2; // how accurate the value should be
+  
+  HScrollbar (float xp, float yp, int sw, int sh, int l, float min_value, float max_value, float starting_value, String title) {
     swidth = sw;
     sheight = sh;
     int widthtoheight = sw - sh;
@@ -21,8 +28,45 @@ class HScrollbar {
     sposMin = xpos;
     sposMax = xpos + swidth - sheight;
     loose = l;
+    this.min_value = min_value;
+    this.max_value = max_value;
+    
+    this.title = title;
+    setCurrentValue(starting_value);
   }
-
+  void setCurrentValue(float x){
+    //given default value and min max, find percentage of value that it represents, assign spos
+    spos = sposMin + (x*(sposMax- sposMin))/(max_value - min_value);
+    newspos = spos;
+  }
+  void drawText() {
+    push();
+    translate(0, -text_yoffset);
+    push();
+    fill(255);
+    // draw min value
+     text(str(min_value), xpos, ypos);
+    // draw max_value
+    push();
+    textAlign(RIGHT);
+    text(str(max_value), xpos + swidth, ypos);
+    pop();
+    //draw curr value
+    //round to nearest power of 10
+    float rounded_value = float(floor(value*pow(10, num_of_decimals))) / pow(10, num_of_decimals);
+    text(str(rounded_value), xpos + swidth/2, ypos);
+    
+    //draw title
+    translate(0, -title_yoffset);
+    text(title, xpos + swidth/2, ypos);
+    pop();
+    pop();
+  }
+  
+  void calcValue(){
+    value = min_value + ((max_value - min_value) * (spos - sposMin) / (sposMax - sposMin));
+    
+}
   void update() {
     if (overEvent()) {
       over = true;
@@ -41,6 +85,7 @@ class HScrollbar {
     if (abs(newspos - spos) > 1) {
       spos = spos + (newspos-spos)/loose;
     }
+    calcValue();
   }
 
   float constrain(float val, float minv, float maxv) {
@@ -57,6 +102,7 @@ class HScrollbar {
   }
 
   void display() {
+    push();
     noStroke();
     fill(204);
     rect(xpos, ypos, swidth, sheight);
@@ -66,6 +112,10 @@ class HScrollbar {
       fill(102, 102, 102);
     }
     rect(spos, ypos, sheight, sheight);
+    pop();
+    //draw text
+    drawText();
+    // returns percentage for UI to change doll paramaters
   }
 
   float getPos() {

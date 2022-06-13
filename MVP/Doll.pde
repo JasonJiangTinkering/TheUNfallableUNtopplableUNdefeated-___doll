@@ -24,24 +24,30 @@ class Doll{
     float obj_height = -3* radius;
     float rollingFrictionConstant;
     float vvSmoll = 0.01;
+    float protractor_radius = 400;
+    UI ui;
     boolean held = false;
     //rolling friction --modify theta by a decaing expontnet function -=- xiaoshen was right LOL - when delta theta < some value then it stops
     
 //coordinate of the point on the doll that the doll will rest on
     Doll(float x, float y, float ground, float rollingFrictionConstant){
+      
       this.object_x = x;
       this.object_y = y - radius;
       this.ground = ground;
       this.rollingFrictionConstant = rollingFrictionConstant;
     }
     
-    //takes in a value from 0 - 90
-    void set_angle(float angle){
-        this.angle = angle;
+     void reset(float x, float y, float ground){
+      time = 0;
+      angular_acceleration =0;
+      angular_velocity=0;
+      this.object_x = x;
+      this.object_y = y - radius;
+      this.ground = ground;
     }
-    
+
     void move(float t){
-        //print(doll.angle + "\n");
         if (angle > PI) angle = PI;
         if (angle < 0) angle = 0;
         if (held){//
@@ -58,7 +64,6 @@ class Doll{
         if (hold < vvSmoll){
           angular_velocity = 0;
         }
-        //print(time +"constant: " + hold + " velocity" + angular_velocity);
         float delta_angle = t * angular_velocity;
         angle += delta_angle;
         // calc change in x
@@ -96,6 +101,7 @@ class Doll{
     void render(PImage b, PImage h, PImage h2){
       // using circles to represent verticties + important points
         //move reference coordinates to body
+        push();
         translate(object_x, object_y);
         push();
 
@@ -125,6 +131,13 @@ class Doll{
         circle(0, 0, radius * 2);
 
         
+        stroke(0);
+        
+        fill(126); //black center of object         
+        circle(0, 0, radius * 2);
+        fill(255);//draw center of circle
+        circle(0, 0, 5);
+
         triangle(-1 * radius, 0, 0, obj_height, radius, 0);
 
         push();
@@ -148,28 +161,37 @@ class Doll{
           circle(0, 0, pullable_button_d);
         pop();
         pop();
-
+        pop();
+    }
+    // returns angle of doll in degrees
+    float degrees(){
+      return (angle/PI * 180);
     }
     
     // only when mouse is pressed
     void test_held(){
-      if (mousePressed){
+      if (mousePressed && mouseY < ground && dist(mouseX, mouseY, object_x, object_y) < protractor_radius){
         time = 0;
         held = true;
         //compared to center of object
         float delta_x = object_x - mouseX;
         float delta_y = object_y - mouseY;
         float holdangle = atan(delta_y / delta_x);
-        //print("COOL" + (delta_x < 0));
-        //print(doll.angle + "\n");
         if (delta_x < 0){
           //holdangle += PI;
           holdangle = -1 * holdangle;
         }else{
           holdangle = PI - holdangle;
         }
+        if (holdangle > PI){
+          holdangle = PI;
+        }
+        if (holdangle < 0){
+          holdangle =0;
+        }
         angle = holdangle;
-
+        ui.starting_angle.setCurrentValue(angle * 180 /PI);
+        //println(degrees());
       }
       else{
         held = false;
