@@ -12,14 +12,11 @@ PImage head_2;
 void setup(){
   //testing scroll bar
     
-<<<<<<< HEAD
+
     size(1300, 800);//set processing settings
     float platform_height = height * 21/30;
 
-=======
-    size(1500, 1000);//set processing settings
-    float platform_height = height * 2/3;
->>>>>>> d592536b73a7bedeaaeec2a98d101093231fc487
+
     frameRate(frames_per_sec);
     fill(255);
  //initiate global variables
@@ -42,15 +39,12 @@ void draw(){
     ui.draw(doll.time);
     doll.test_held();
     doll.move(4 / frames_per_sec);
-<<<<<<< HEAD
+
     doll.render(body, head_1, head_2);
- 
-=======
-    doll.render();
-    //println(mouseX +" , "+ mouseY);
+
 }
 void mouseClicked(){
   //println("click");
    ui.testClick();
->>>>>>> d592536b73a7bedeaaeec2a98d101093231fc487
+
 }

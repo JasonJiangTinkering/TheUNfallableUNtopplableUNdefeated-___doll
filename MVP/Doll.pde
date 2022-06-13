@@ -59,7 +59,7 @@ class Doll{
         if (hold < vvSmoll){
           angular_velocity = 0;
         }
-        //print(time +"constant: " + hold + " velocity" + angular_velocity);
+        print(" angle " + angle);
         float delta_angle = t * angular_velocity;
         angle += delta_angle;
         // calc change in x
@@ -104,7 +104,7 @@ class Doll{
         float px = -100;
         float py = -250;
         PImage face = h;
-        if (abs(angular_velocity) > .2){
+        if (abs(angular_velocity) > .08){
           face = h2;
         }
         else{
