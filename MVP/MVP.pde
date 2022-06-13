@@ -34,8 +34,8 @@ void setup(){
 }
 
 void draw(){
-    background(255); //<>//
->>>>>>> pause_menu
+    fill(255);
+    //ui.draw_background(status); //<>//
     ui.draw(doll.time);
     
     if (status=="setup"){
