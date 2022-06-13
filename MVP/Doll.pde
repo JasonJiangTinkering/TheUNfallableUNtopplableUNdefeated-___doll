@@ -64,7 +64,7 @@ class Doll{
         if (hold < vvSmoll){
           angular_velocity = 0;
         }
-        print(" angle " + angle);
+        //print(" angle " + angle);
         float delta_angle = t * angular_velocity;
         angle += delta_angle;
         // calc change in x
@@ -192,7 +192,6 @@ class Doll{
         }
         angle = holdangle;
         ui.starting_angle.setCurrentValue(angle * 180 /PI);
-        //println(degrees());
       }
       else{
         held = false;

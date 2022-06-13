@@ -29,32 +29,32 @@ void setup(){
     bg = loadImage("sun.png");
     bg.resize(1300, 560);
     body = loadImage("panda.png");
-    head_1 = loadImage("fine.png"); //<>//
-    head_2 = loadImage("notfine.png"); //<>//
+    head_1 = loadImage("fine.png"); //<>// //<>// //<>//
+    head_2 = loadImage("notfine.png"); //<>// //<>// //<>//
     image(bg, 0, 0);
 
     //size(1500, 1000);//had some issues with screen displaying
 
-    frameRate(frames_per_sec); //<>//
+    frameRate(frames_per_sec); //<>// //<>// //<>//
     fill(255);
  //initiate global variables
     
     doll = new Doll(width/2, global.platform_height, global.platform_height, exponential_decay_constant);
     ui = new UI(global.platform_height, doll);
-    doll.ui = ui; //<>//
-    ui.draw_background(status); //<>//
+    doll.ui = ui; //<>// //<>// //<>//
+    ui.draw_background(status); //<>// //<>// //<>//
 }
 
 void draw(){
-    fill(255);
-    //ui.draw_background(status); //<>//
+    background(255);
+    image(bg, 0, 0); //<>//
     ui.draw(doll.time);
     
     if (status=="setup"){
       //print("setup");
       doll.test_held(); 
     }else{
-      float time_passed = 4 / frames_per_sec; //<>//
+      float time_passed = 4 / frames_per_sec; //<>// //<>// //<>//
       doll.move(time_passed); 
       ui.draw_go(time_passed);
     }
@@ -90,6 +90,6 @@ void draw(){
 
 }
 void mouseClicked(){
-  println(mouseX + " "+ mouseY);
+  //println(mouseX + " "+ mouseY);
    ui.testClick();
 }

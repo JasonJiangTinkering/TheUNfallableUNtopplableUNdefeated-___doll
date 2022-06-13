@@ -92,7 +92,7 @@ class Button{
   
   void isPressed(StringList events){
     if (circleOver){
-      print(circleOver);
+      //print(circleOver);
       toggle = !toggle;
         if (toggle){
       // go

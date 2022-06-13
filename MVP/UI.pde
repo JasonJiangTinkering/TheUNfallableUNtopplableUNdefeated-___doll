@@ -10,7 +10,7 @@ class UI{
   ArrayList<Button> ButtonList;
   ArrayList<HScrollbar> ScrollbarList;
   ArrayList<Graph> GraphList;
-  Graph graph_angle;
+  Graph graph_angle, graph_acceleration;
   UI(float platform_height, Doll doll){
     ButtonList = new ArrayList<Button>();
     ScrollbarList = new ArrayList<HScrollbar>();
@@ -19,7 +19,9 @@ class UI{
     this.platform_height = platform_height;
     this.doll = doll;
     graph_angle = new Graph("Doll Angle", color(0,0,255));
+    graph_acceleration = new Graph("Doll Acceleration", color(0,255,0));
     GraphList.add(graph_angle);
+    GraphList.add(graph_acceleration);
     
     
     //min value, 
@@ -83,9 +85,16 @@ class UI{
   void draw_go(float time_passed){
     //plot points
     graph_angle.plot(doll.angle * 180/ PI, time_passed);
+    graph_acceleration.plot(doll.angular_acceleration, time_passed);
     //draw graph
+    int x1, y1, x2, y2;
+    x1 = 14;
+    y1 = 529;
+    x2 = 352;
+    y2 = 734;
+    int rect_width = x2- x1;
     for (int i = 0; i < GraphList.size(); i ++){
-      GraphList.get(i).render(14, 529, 352, 734);
+      GraphList.get(i).render(x1 + rect_width* i, y1, x2+ rect_width* i, y2);
     }
   }
   void draw_background(String status){
@@ -118,7 +127,4 @@ class UI{
       ButtonList.get(i).isPressed(events);
     }
   }
-  
-  //void draw(float time){
-    
 }
