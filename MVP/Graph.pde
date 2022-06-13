@@ -17,7 +17,7 @@ class Graph{
     values = new ArrayList<Float>();
     times = new ArrayList <Float>();
     max_value =0;
-    min_value = 0 ;
+    min_value = Float.MAX_VALUE;
  }
   
   void plot(float value, float delta_time){
@@ -25,8 +25,9 @@ class Graph{
     if (value > max_value){
       max_value = value;
     }
+    
     if (value < min_value){
-      max_value = value;
+      min_value = value;
     }
     values.add(value);
     times.add(delta_time);
@@ -43,21 +44,32 @@ class Graph{
     y1 += margin;
     x2 -= margin;
     y2 -= margin;
-    float rectHeight = max_value - min_value; 
+    
+    // give value of mouse location
+    //if (mouseX > x1 && mouseX < x2 && mouseY < y2 && mouseY > x1){
+    //  text( str(((mouseY - y1) / (y2 - y1) ) * max_value), mouseX, mouseY );
+    //}
+    
+    
+    float rectHeight = y2 - y1; 
     rect(x1, y1, x2, y2);
     fill(0);
     // create + display scale
     textAlign(LEFT, CENTER);
-    text('-'+str(max_value), x1, y1);
-    text('-'+str(min_value), x1, y2);
+    text('>'+str(max_value), x1, y1);
+    text('>'+str((max_value - min_value)/2), x1, (y2 - y1)/2 + y1);
+    text('>'+str(min_value), x1, y2);
     // display title
     textAlign(CENTER);
     text(title, (x1 + x2)/2, y1 + margin *2);
     //draw points
     fill(plotColor);
     float cur_index_time = 0;
+    //println(title + " max value: "+ max_value);
     for (int i = 0; i < values.size(); i++){
-      float ploty = (values.get(i) - min_value) / (max_value - min_value) * rectHeight;
+      
+      float ploty = (  (1 - ((values.get(i) - min_value) / (max_value - min_value))) * rectHeight);
+      //println(title + " " + values.get(i) + " y offset: " + max_value);
       cur_index_time += times.get(i);
       push();
       translate(x1, y1); // offset to the center of the graph, cause pos + neg
