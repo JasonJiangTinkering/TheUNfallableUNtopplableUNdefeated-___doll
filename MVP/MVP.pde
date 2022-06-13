@@ -4,7 +4,7 @@ float frames_per_sec = 60;
 float exponential_decay_constant = .002/4;
 UI ui;
 // handles when non constant primative variables need to be set up in setup, and used in go 
-Globals global = new Globals();
+Globals global;
 String status = "setup";
 HScrollbar test;
 PImage bg;
@@ -14,29 +14,28 @@ PImage head_2;
 
 void setup(){
   //testing scroll bar
+    fullScreen();
+    global = new Globals(); 
     
-
-    size(1300, 800);//set processing settings
-    float platform_height = height * 21/30;
-
+    global.platform_height = (float(height) * 2)/3;
 
     frameRate(frames_per_sec);
     fill(255);
  //initiate global variables
-    doll = new Doll(width/2, height, platform_height, exponential_decay_constant);
-    ui = new UI(platform_height);
+    doll = new Doll(width/2, height, global.platform_height, exponential_decay_constant);
+    ui = new UI(global.platform_height, doll);
     doll.angle = PI;
     doll.rollingFrictionConstant = exponential_decay_constant;
     bg = loadImage("sun.png");
     bg.resize(1300, 560);
     body = loadImage("panda.png");
-    head_1 = loadImage("fine.png");
-    head_2 = loadImage("notfine.png");
+    head_1 = loadImage("fine.png"); //<>//
+    head_2 = loadImage("notfine.png"); //<>//
     image(bg, 0, 0);
-    fullScreen();
+
     //size(1500, 1000);//had some issues with screen displaying
-    global.platform_height = (float(height) * 2)/3;
-    frameRate(frames_per_sec);
+
+    frameRate(frames_per_sec); //<>//
     fill(255);
  //initiate global variables
     
@@ -55,7 +54,7 @@ void draw(){
       //print("setup");
       doll.test_held(); 
     }else{
-      float time_passed = 4 / frames_per_sec;
+      float time_passed = 4 / frames_per_sec; //<>//
       doll.move(time_passed); 
       ui.draw_go(time_passed);
     }
