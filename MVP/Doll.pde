@@ -93,21 +93,42 @@ class Doll{
         return neg * g * sin(cm_theta)/cm_r ;
     }
     
-    void render(){
+    void render(PImage b, PImage h, PImage h2){
       // using circles to represent verticties + important points
         //move reference coordinates to body
         translate(object_x, object_y);
         push();
+
         rotate(PI/2 - angle );
+        float px = -100;
+        float py = -250;
+        PImage face = h;
+        if (abs(angular_velocity) > .2){
+          face = h2;
+        }
+        else{
+            face = h;
+          }
+        
+        image(b, px, py);
+        
+        b.resize(200, 300);
+        image(face, px+25, py-40);
+        face.resize(150, 150);
         
         // draw the body
-        stroke(0);
-        fill(126); //black center of object         
+        
+        stroke(255);
+        fill(255,0,0,50); //black center of object    
+        //noFill();
+        
         circle(0, 0, radius * 2);
+
         
         triangle(-1 * radius, 0, 0, obj_height, radius, 0);
 
         push();
+        
 
         // draw the center of mass
         translate(offset_cx, offset_cy);
@@ -127,6 +148,7 @@ class Doll{
           circle(0, 0, pullable_button_d);
         pop();
         pop();
+
     }
     
     // only when mouse is pressed
