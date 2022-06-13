@@ -44,20 +44,18 @@ class Graph{
     y1 += margin;
     x2 -= margin;
     y2 -= margin;
-    
-    // give value of mouse location
-    //if (mouseX > x1 && mouseX < x2 && mouseY < y2 && mouseY > x1){
-    //  text( str(((mouseY - y1) / (y2 - y1) ) * max_value), mouseX, mouseY );
-    //}
-    
-    
     float rectHeight = y2 - y1; 
+    float valueDiff = max_value - min_value;
+
+    
+    
+    
     rect(x1, y1, x2, y2);
     fill(0);
     // create + display scale
     textAlign(LEFT, CENTER);
     text('>'+str(max_value), x1, y1);
-    text('>'+str((max_value - min_value)/2), x1, (y2 - y1)/2 + y1);
+    text('>'+str((max_value + min_value)/2), x1, (y2 - y1)/2 + y1);
     text('>'+str(min_value), x1, y2);
     // display title
     textAlign(CENTER);
@@ -66,9 +64,11 @@ class Graph{
     fill(plotColor);
     float cur_index_time = 0;
     //println(title + " max value: "+ max_value);
+    //println("" + mouseX +" " + mouseY);
+    //println(" "+ x1 +" " + y1);
     for (int i = 0; i < values.size(); i++){
       
-      float ploty = (  (1 - ((values.get(i) - min_value) / (max_value - min_value))) * rectHeight);
+      float ploty = (  (1 - ((values.get(i) - min_value) / valueDiff))) * rectHeight;
       //println(title + " " + values.get(i) + " y offset: " + max_value);
       cur_index_time += times.get(i);
       push();
@@ -76,10 +76,16 @@ class Graph{
       float plotx = ((cur_index_time / time_elapsed) * (x2 - x1));
       rectMode(CENTER);
       rect(plotx, ploty, plot_size, plot_size);
+      
+      // give value of mouse location
+      if (mouseX > x1 && mouseX < x2 && mouseY < y2 && mouseY > y1){ //<>//
+        text(title, mouseX, mouseY);
+        //text( title + ": "+ ((mouseY - y1) / (rectHeight) ) * (valueDiff) , mouseX, mouseY );
+      }
       pop();
     }
     
-    
+
     pop();
   }
 }

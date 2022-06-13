@@ -22,8 +22,9 @@ class UI{
     graph_acceleration = new Graph("Doll Acceleration", color(0,255,0));
     graph_velocity = new Graph("Doll Velocity", color(255,0,0));
     GraphList.add(graph_angle);
-    GraphList.add(graph_acceleration);
     GraphList.add(graph_velocity);
+    GraphList.add(graph_acceleration);
+    
     
     
     
