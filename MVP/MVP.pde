@@ -14,6 +14,19 @@ PImage head_2;
 
 void setup(){
   //testing scroll bar
+    
+
+    size(1300, 800);//set processing settings
+    float platform_height = height * 21/30;
+
+
+    frameRate(frames_per_sec);
+    fill(255);
+ //initiate global variables
+    doll = new Doll(width/2, height, platform_height, exponential_decay_constant);
+    ui = new UI(platform_height);
+    doll.angle = PI;
+    doll.rollingFrictionConstant = exponential_decay_constant;
     bg = loadImage("sun.png");
     bg.resize(1300, 560);
     body = loadImage("panda.png");
