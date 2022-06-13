@@ -110,12 +110,13 @@ class Doll{
         float px = -100;
         float py = -250;
         PImage face = h;
-        if (abs(angular_velocity) > .08){
+        if (abs(angular_velocity) > .05){
           face = h2;
         }
         else{
             face = h;
           }
+
         
         image(b, px, py);
         
